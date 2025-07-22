@@ -12,6 +12,7 @@ const LoginPage = () => {
 
   const [password, setPassword] = useState("Satyam@1234");
   const [passError, setPassError] = useState("");
+  const [loginError, setLoginError] = useState("");
 
   const [isLoading, setIsLoading] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
@@ -55,7 +56,7 @@ const LoginPage = () => {
         return navigate("/Feed");
       } catch (error) {
         console.log("error from login", error);
-
+        setLoginError(error?.response?.data || "Invalid credentials");
         setIsLoading(false);
       }
     }
@@ -75,7 +76,7 @@ const LoginPage = () => {
           {/* name of each tab group should be unique */}
           <div className="tabs tabs-lift">
             <label className="tab">
-              <input type="radio" name="my_tabs_4" />
+              <input type="radio" name="my_tabs_4" defaultChecked />
               Login
             </label>
             <div className="tab-content bg-base-100 border-base-300 p-6">
@@ -114,7 +115,7 @@ const LoginPage = () => {
             </div>
 
             <label className="tab">
-              <input type="radio" name="my_tabs_4" defaultChecked />
+              <input type="radio" name="my_tabs_4" />
               SignUp
             </label>
             <div className="tab-content bg-base-100 border-base-300 p-6">
@@ -152,6 +153,8 @@ const LoginPage = () => {
               </fieldset>
             </div>
           </div>
+          {loginError && <p className="mt-1 text-sm text-error">{loginError}</p>}
+
           <button
             onClick={handleSubmit}
             className="btn bg-primary mt-5 w-80"
