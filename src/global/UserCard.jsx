@@ -1,6 +1,10 @@
 import React from "react";
 
 const UserCard = ({ data }) => {
+  const { firstName, lastName, age, gender, photoUrl, about, skills } = data;
+
+  console.log("data at userCard", data);
+
   return (
     <div>
       <div className="card card-side bg-base-300 shadow-sm">
@@ -12,13 +16,10 @@ const UserCard = ({ data }) => {
         </figure>
         <div className="card-body">
           <h2 className="card-title">
-            {data?.firstName.charAt(0).toUpperCase() +
-              data?.firstName.slice(1) +
-              " " +
-              data?.lastName}
+            {firstName?.charAt(0).toUpperCase() + firstName?.slice(1) + " " + lastName}
           </h2>
-          <p>{data?.about}</p>
-          <p>{data?.skills}</p>
+          <p>{about}</p>
+          <p>{skills}</p>
           <div className="card-actions justify-end">
             <button className="btn btn-secondary">Ignore</button>
             <button className="btn btn-primary">Connect</button>

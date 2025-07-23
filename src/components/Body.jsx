@@ -15,8 +15,6 @@ const Body = () => {
   const fetchUser = async () => {
     try {
       const res = await axios.get(BASE_URL + "/profile/view", { withCredentials: true });
-      console.log("res", res);
-
       dispatch(addUser(res.data));
     } catch (error) {
       console.log("error while fetch user", error);
