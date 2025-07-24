@@ -10,7 +10,8 @@ const UserCard = ({ data }) => {
       <div className="card card-side bg-base-300 shadow-sm">
         <figure>
           <img
-            src={"https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.webp"}
+            src={photoUrl}
+            className="w-60"
             alt="https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.webp"
           />
         </figure>
@@ -20,6 +21,11 @@ const UserCard = ({ data }) => {
           </h2>
           <p>{about}</p>
           <p>{skills}</p>
+          <p>
+            {age}
+            {"   "}
+            {gender}
+          </p>
           <div className="card-actions justify-end">
             <button className="btn btn-secondary">Ignore</button>
             <button className="btn btn-primary">Connect</button>

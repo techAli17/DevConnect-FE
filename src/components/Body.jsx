@@ -12,19 +12,20 @@ const Body = () => {
   const navigate = useNavigate();
   const user = useSelector((store) => store.user);
 
-  const fetchUser = async () => {
-    try {
-      const res = await axios.get(BASE_URL + "/profile/view", { withCredentials: true });
-      dispatch(addUser(res.data));
-    } catch (error) {
-      console.log("error while fetch user", error);
-    }
-  };
-
   useEffect(() => {
-    if (!user) fetchUser();
-    else navigate("/Feed");
-  }, []);
+    async function init() {
+      if (!user) {
+        try {
+          const res = await axios.get(`${BASE_URL}/profile/view`, { withCredentials: true });
+          dispatch(addUser(res.data));
+        } catch (err) {
+          navigate("/login");
+        }
+      }
+    }
+    init();
+  }, [user, dispatch, navigate]);
+
   return (
     <div>
       <NavBar />

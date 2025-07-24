@@ -1,19 +1,56 @@
-import React, { useState } from "react";
+import axios from "axios";
 import UserCard from "./UserCard";
+import React, { useState } from "react";
+import { BASE_URL } from "../utils/baseUrl";
+import { useDispatch } from "react-redux";
+import { addUser } from "../redux/userSlice";
 
 const EditProfile = ({ user }) => {
-  console.log("user at edit profile", user);
+  const dispatch = useDispatch();
 
   const [age, setAge] = useState(user?.age);
   const [about, setAbout] = useState(user?.about);
-  const [skills, setSkills] = useState(user?.skills);
+  // const [skills, setSkills] = useState(user?.skills);
   const [gender, setGender] = useState(user?.gender);
   const [lastName, setLastName] = useState(user?.lastName);
+  const [photoUrl, setPhotoUrl] = useState(
+    "https://images.unsplash.com/photo-1633332755192-727a05c4013d?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bWFuJTIwZmFjZXxlbnwwfHwwfHx8MA%3D%3D" ||
+      user?.photoUrl
+  );
   const [firstName, setFirstName] = useState(user?.firstName);
-  const [photoUrl, setPhotoUrl] = useState(user?.photoUrl);
+
+  const [showToast, setShowToast] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleUpdateProfile = () => {};
+  const handleUpdateProfile = async () => {
+    try {
+      setIsLoading(true);
+      const res = await axios.patch(
+        BASE_URL + "/profile/edit",
+        {
+          firstName,
+          lastName,
+          photoUrl,
+          gender,
+          age,
+          about,
+        },
+        { withCredentials: true }
+      );
+      dispatch(addUser(res?.data?.data));
+      setIsLoading(false);
+      setShowToast(true);
+      const time = setTimeout(() => {
+        setShowToast(false);
+      }, 2000);
+      return () => clearTimeout(time);
+    } catch (error) {
+      console.log("error", error);
+
+      setError(error?.message);
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="flex justify-center my-10 ">
@@ -90,7 +127,7 @@ const EditProfile = ({ user }) => {
                   </div>
                   {/* {passError && <p className="mt-1 text-sm text-error">{passError}</p>} */}
                 </fieldset>
-                <fieldset className="fieldset">
+                {/* <fieldset className="fieldset">
                   <legend className="fieldset-legend">Skills:</legend>
                   <div className="relative">
                     <input
@@ -101,8 +138,7 @@ const EditProfile = ({ user }) => {
                       onChange={(e) => setSkills(e.target.value)}
                     />
                   </div>
-                  {/* {passError && <p className="mt-1 text-sm text-error">{passError}</p>} */}
-                </fieldset>
+                </fieldset> */}
                 <fieldset className="fieldset">
                   <legend className="fieldset-legend">Photo URL:</legend>
                   <div className="relative">
@@ -138,7 +174,14 @@ const EditProfile = ({ user }) => {
           </div>
         </div>
       </div>
-      <UserCard data={{ firstName, lastName, age, gender, photoUrl, about, skills }} />
+      {showToast && (
+        <div className="toast toast-top toast-center">
+          <div className="alert alert-success">
+            <span>Message sent successfully.</span>
+          </div>
+        </div>
+      )}
+      <UserCard data={{ firstName, lastName, age, gender, photoUrl, about }} />
     </div>
   );
 };
