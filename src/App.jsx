@@ -6,6 +6,7 @@ import Profile from "./components/Profile";
 import LoginPage from "./components/LoginPage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Feed from "./components/Feed";
+import Connections from "./components/Connections";
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
               <Route path="/login" element={<LoginPage />} />
               <Route path="/Feed" element={<Feed />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/Connections" element={<Connections />} />
             </Route>
           </Routes>
         </BrowserRouter>

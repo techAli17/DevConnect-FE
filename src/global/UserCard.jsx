@@ -3,7 +3,7 @@ import React from "react";
 const UserCard = ({ data }) => {
   const { firstName, lastName, age, gender, photoUrl, about, skills } = data;
 
-  console.log("data at userCard", data);
+  console.log("data at userCard", photoUrl);
 
   return (
     <div>
