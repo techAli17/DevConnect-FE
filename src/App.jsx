@@ -7,6 +7,7 @@ import LoginPage from "./components/LoginPage";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Feed from "./components/Feed";
 import Connections from "./components/Connections";
+import Chat from "./components/Chat";
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
               <Route path="/Feed" element={<Feed />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/Connections" element={<Connections />} />
+              <Route path="/Chat/:toUserId" element={<Chat />} />
             </Route>
           </Routes>
         </BrowserRouter>
